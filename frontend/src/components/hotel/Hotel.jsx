@@ -152,7 +152,7 @@ export default function Hotel(){
                                         method: 'POST',
                                         headers: {'Content-Type':'application/json'},
                                         body: JSON.stringify({
-                                            "UserId": "raven",
+                                            "UserId": sessionStorage.getItem("user"),
                                             "CheckIn": data.CheckIn,
                                             "CheckOut": data.CheckOut,
                                             "Adults": data.Adults,
