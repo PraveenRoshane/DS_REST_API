@@ -6,6 +6,11 @@ const reserveRouter = new Router({
     prefix: '/reserve'
 });
 
+reserveRouter.post('/sendMail', async (ctx) => {
+    const mail = ctx.request.body.email;
+    sendMail(mail)
+})
+
 reserveRouter.post('/', async (ctx) => {
     const data = ctx.request.body;
     const post = await save(data);
