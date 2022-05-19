@@ -1,6 +1,7 @@
-import { Box, Button, TextField, Snackbar, Alert, Link } from "@mui/material";
+import {Box, Button, TextField, Snackbar, Alert, Link, Paper, Container, Avatar} from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import {LocalTaxi, LocationCity} from "@mui/icons-material";
 
 const ReserveTaxi = () => {
   const [name, setName] = useState("");
@@ -76,6 +77,9 @@ const ReserveTaxi = () => {
   }
 
   return (
+      <Container>
+        <br/>
+      <Paper>
     <div
       style={{
         paddingTop: 40,
@@ -191,6 +195,8 @@ const ReserveTaxi = () => {
         )}
       </Snackbar>
     </div>
+      </Paper>
+      </Container>
   );
 };
 
