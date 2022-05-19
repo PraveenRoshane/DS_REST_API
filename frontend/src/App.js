@@ -6,6 +6,8 @@ import Hotel from "./components/hotel/Hotel";
 import AddHotel from "./components/hotel/AddHotel";
 import SignIn from "./components/User/SignIn";
 import SignUp from "./components/User/SignUp";
+import ReserveTaxi from './components/TaxiService/ReserveTaxi';
+import ManageTaxi from './components/TaxiService/ManageTaxi';
 
 function App() {
   return (
@@ -19,6 +21,9 @@ function App() {
           <Route path='/HotelsAdd' element={<AddHotel />} />
           <Route path='/Hotels/:id' element={<Hotel />} />
           <Route path='/Payment' element={<HotelsHome />} />
+          <Route path='/taxiService' element={<ReserveTaxi />} />
+          <Route path='/manageTaxi' element={<ManageTaxi />} />
+          
 
           {/*<Route path='/ViewItems' element={<ViewItems />} />*/}
           {/*<Route path='/ManagePromotions' element={<ManagePromotions />} />*/}

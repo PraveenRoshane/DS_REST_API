@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {
     Avatar,
     Box, Container,
-    FormControl,
+    FormControl, FormGroup,
     Grid,
     InputLabel, MenuItem,
     Paper,
@@ -19,6 +19,8 @@ import {Bed, HotelRounded, KingBed, AddLocation, SingleBed, SingleBedTwoTone} fr
 import {Carousel} from "react-carousel-minimal";
 import Button from "@mui/material/Button";
 import Footer from "../footer/Footer";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export default function Hotel(){
     const { id } = useParams();
@@ -152,7 +154,7 @@ export default function Hotel(){
                                         method: 'POST',
                                         headers: {'Content-Type':'application/json'},
                                         body: JSON.stringify({
-                                            "UserId": "raven",
+                                            "UserId": sessionStorage.getItem("user"),
                                             "CheckIn": data.CheckIn,
                                             "CheckOut": data.CheckOut,
                                             "Adults": data.Adults,
@@ -163,15 +165,19 @@ export default function Hotel(){
                                             "Phone": data.phone
                                         })
                                     };
-                                    console.log(requestOptions)
                                     fetch('http://localhost:5000/reserve', requestOptions)
                                         .then(() => {
                                             console.log("Reservation successful")
-                                            if(items.prePayment == null){
-                                                navigate('/Hotels')
+                                            if(data.checked){
+                                                navigate('/taxiService')
                                             }else {
-                                                navigate('/Payment')
+                                                if(items.prePayment == null){
+                                                    navigate('/Hotels')
+                                                }else {
+                                                    navigate('/Payment')
+                                                }
                                             }
+
                                         })
                                         .catch(console.error)
                                 }
@@ -282,6 +288,9 @@ export default function Hotel(){
                                     />
                                 </Grid>
                             </Grid>
+                            <FormGroup>
+                                <FormControlLabel control={<Checkbox {...register('checked')} />} label="Do you want to reserve a taxi" />
+                            </FormGroup>
                             <Button
                                 type="submit"
                                 fullWidth
