@@ -3,6 +3,7 @@ import bodyParser from 'koa-bodyparser';
 import hotelsRouter from "./router/hotels.router.js";
 import initDB from './database.js';
 import reserveRouter from "./router/reserve.router.js";
+import userRouter from "./router/user.router.js";
 
 initDB();
 
@@ -20,6 +21,9 @@ app.use(hotelsRouter.routes())
 
 app.use(reserveRouter.routes())
     .use(reserveRouter.allowedMethods())
+
+app.use(userRouter.routes())
+    .use(userRouter.allowedMethods())
 
 app.use(ctx => {
     ctx.set('Content-Type','text/html');

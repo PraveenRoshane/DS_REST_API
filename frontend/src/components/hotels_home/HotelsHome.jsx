@@ -1,4 +1,4 @@
-import {alpha, InputBase} from "@mui/material";
+import {alpha, InputBase, Paper, Typography} from "@mui/material";
 import Grid from "@mui/material/Grid";
 import HotelCard from "./HotelCard";
 import {useEffect, useState} from "react";

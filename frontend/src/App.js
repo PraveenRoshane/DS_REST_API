@@ -4,7 +4,8 @@ import Home from "./components/home/Home";
 import HotelsHome from "./components/hotels_home/HotelsHome";
 import Hotel from "./components/hotel/Hotel";
 import AddHotel from "./components/hotel/AddHotel";
-
+import SignIn from "./components/User/SignIn";
+import SignUp from "./components/User/SignUp";
 
 function App() {
   return (
@@ -12,8 +13,8 @@ function App() {
       <BrowserRouter>
         <Routes path='/'>
           <Route path='/' element={<Home />} />
-          {/*<Route path='/Signin' element={<Signin />} />*/}
-          {/*<Route path='/Signup' element={<Signup />} />*/}
+          <Route path='/Signin' element={<SignIn />} />
+          <Route path='/Signup' element={<SignUp />} />
           <Route path='/Hotels' element={<HotelsHome />} />
           <Route path='/HotelsAdd' element={<AddHotel />} />
           <Route path='/Hotels/:id' element={<Hotel />} />

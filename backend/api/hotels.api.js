@@ -2,8 +2,18 @@ import {createHotelInDb, getAllHotelsFromDb, getHotelFromDb} from '../db_service
 
 const hotels = new Map();
 
-export const save = async ({hotelId, ownerName, name, description, address, prePayment, category, rating, mainImage, subImages}) => {
-    const ctx = {hotelId, ownerName, name, description, address, prePayment, category, rating, mainImage, subImages};
+export const save = async ({ownerName, name, description, address, prePayment, category, rating, mainImage, subImages}) => {
+    let data = [];
+    data = await getAllHotelsFromDb();
+    let max = 0;
+    data.forEach( (item) => {
+            if(parseInt(item.hotelId) > max){
+                max = item.hotelId;
+            }
+        }
+    )
+
+    const ctx = {hotelId: parseInt(max)+1, ownerName, name, description, address, prePayment, category, rating, mainImage, subImages};
     const hotel = await createHotelInDb(ctx);
     return hotel;
 }

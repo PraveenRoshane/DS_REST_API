@@ -32,8 +32,6 @@ export default function Hotel(){
             .catch(console.error)
     }, [id]);
 
-    {items.subImages == null ? console.log("null"):console.log("Not null")}
-
     const data = [
         {
             image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/GoldenGateBridge-001.jpg/1200px-GoldenGateBridge-001.jpg",
