@@ -158,7 +158,9 @@ export default function Hotel(){
                                             "Adults": data.Adults,
                                             "Children": data.Children,
                                             "RoomType": data.RoomType,
-                                            "Rooms": data.Rooms
+                                            "Rooms": data.Rooms,
+                                            "Email": data.email,
+                                            "Phone": data.phone
                                         })
                                     };
                                     console.log(requestOptions)
@@ -256,6 +258,27 @@ export default function Hotel(){
                                         InputProps={{ inputProps: { min: 1, max: 10 } }}
                                         autoFocus
                                         {...register('Rooms')}
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={3}>
+                                <Grid item xs={12} md={6} lg={6}>
+                                    <TextField
+                                        margin="normal"
+                                        fullWidth
+                                        label="Email"
+                                        autoFocus
+                                        {...register('email')}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6} lg={6}>
+                                    <TextField
+                                        type="number"
+                                        margin="normal"
+                                        fullWidth
+                                        label="Phone Number"
+                                        autoFocus
+                                        {...register('phone')}
                                     />
                                 </Grid>
                             </Grid>
