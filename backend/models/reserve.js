@@ -8,6 +8,8 @@ const UserSchema = new Schema({
     Adults: String,
     Children: String,
     RoomType: String,
-    Rooms: String
+    Rooms: String,
+    Email: String,
+    Phone: String,
 });
 export default mongoose.model('Reserve', UserSchema);
