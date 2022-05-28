@@ -155,6 +155,8 @@ export default function Hotel(){
                                         headers: {'Content-Type':'application/json'},
                                         body: JSON.stringify({
                                             "UserId": sessionStorage.getItem("user"),
+                                            "hotelId": id,
+                                            "hotelName": items.name,
                                             "CheckIn": data.CheckIn,
                                             "CheckOut": data.CheckOut,
                                             "Adults": data.Adults,
@@ -174,7 +176,7 @@ export default function Hotel(){
                                                 if(items.prePayment == null){
                                                     navigate('/Hotels')
                                                 }else {
-                                                    navigate('/Payment')
+                                                    navigate(`/Payment/${items.prePayment}`)
                                                 }
                                             }
 

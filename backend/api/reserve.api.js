@@ -3,13 +3,13 @@ import {
   getReserveFromDb,
   getAllReservesFromDb,
   updateReserveFromDb,
-  deleteReserveFromDb,
+  deleteReserveFromDb, getUserReserveFromDb,
 } from "../db_services/reserve.service.js";
 
 import nodemailer from 'nodemailer';
 
 export const save = async ({
-  UserId,
+  UserId, hotelId, hotelName,
   CheckIn,
   CheckOut,
   Adults,
@@ -22,6 +22,8 @@ export const save = async ({
 }) => {
   const ctx = {
     UserId,
+    hotelId,
+    hotelName,
     CheckIn,
     CheckOut,
     Adults,
@@ -77,6 +79,14 @@ export const getById = async (id) => {
   return reserve;
 };
 
+export const getByUser = async (id) => {
+  const reserve = await getUserReserveFromDb(id);
+  if (!reserve) {
+    throw new Error(`Not found data`);
+  }
+  return reserve;
+};
+
 export const getAll = async () => {
   const reserves = await getAllReservesFromDb();
   return reserves;
@@ -105,7 +115,7 @@ export const update = async (
   return reserve;
 };
 
-export const deletePost = async (id) => {
+export const deleteReserve = async (id) => {
   const reserve = await deleteReserveFromDb(id);
   if (!reserve) {
     throw new Error(`Not found data`);

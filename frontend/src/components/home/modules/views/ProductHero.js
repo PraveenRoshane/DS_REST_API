@@ -32,16 +32,29 @@ export default function ProductHero() {
       >
         Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
       </Typography>
-      <Button
-        color="secondary"
-        variant="contained"
-        size="large"
-        component="a"
-        href="/Signup"
-        sx={{ minWidth: 200 }}
-      >
-        Register
-      </Button>
+      {sessionStorage.getItem("user") == null ?
+          <Button
+              color="secondary"
+              variant="contained"
+              size="large"
+              component="a"
+              href="/Signup"
+              sx={{minWidth: 200}}
+          >
+            Register
+          </Button>
+          :
+          <Button
+              color="secondary"
+              variant="contained"
+              size="large"
+              component="a"
+              href="/Hotels"
+              sx={{minWidth: 200}}
+          >
+            Browse Hotels
+          </Button>
+      }
       <Typography variant="body2" color="inherit" sx={{ mt: 2 }}>
         Discover the experience
       </Typography>

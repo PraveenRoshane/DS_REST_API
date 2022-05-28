@@ -1,8 +1,14 @@
-import {createHotelInDb, getAllHotelsFromDb, getHotelFromDb} from '../db_services/hotel.service.js'
+import {
+    createHotelInDb,
+    getAllHotelsFromDb,
+    getHotelFromDb,
+    getUserHotelFromDb,
+    updateHotelFromDb
+} from '../db_services/hotel.service.js'
 
 const hotels = new Map();
 
-export const save = async ({ownerName, name, description, address, prePayment, category, rating, mainImage, subImages}) => {
+export const save = async ({user, ownerName, name, description, address, prePayment, category, rating, mainImage, subImages}) => {
     let data = [];
     data = await getAllHotelsFromDb();
     let max = 0;
@@ -13,7 +19,7 @@ export const save = async ({ownerName, name, description, address, prePayment, c
         }
     )
 
-    const ctx = {hotelId: parseInt(max)+1, ownerName, name, description, address, prePayment, category, rating, mainImage, subImages};
+    const ctx = {hotelId: parseInt(max)+1, user, ownerName, name, description, address, prePayment, category, rating, mainImage, subImages};
     const hotel = await createHotelInDb(ctx);
     return hotel;
 }
@@ -26,18 +32,36 @@ export const getById = async (id) => {
     return hotel
 }
 
+export const getByUser = async (id) => {
+    const hotel = await getUserHotelFromDb(id);
+    if (!hotel) {
+        throw new Error(`Not found data`)
+    }
+    return hotel
+}
+
 export const getAll = async () => {
     const data = await getAllHotelsFromDb();
     return data;
 }
 
-export const update = (id, {ownerName, name, description, address, prePayment, category, rating, mainImage, subImages}) => {
-    if(!hotels.has(id)){
-        throw new Error(`Not found the hotel from this ID ${id}`);
-    }
+export const update = async (id, {
+    ownerName,
+    name,
+    description,
+    address,
+    prePayment,
+    category,
+    rating,
+    mainImage,
+    subImages
+}) => {
+    // if(!hotels.has(id)){
+    //     throw new Error(`Not found the hotel from this ID ${id}`);
+    // }
     const hotel = {ownerName, name, description, address, prePayment, category, rating, mainImage, subImages};
-    hotels.set(hotel.id, hotel);
-    return hotel;
+    const data = await updateHotelFromDb(id, hotel);
+    return data;
 }
 
 export const deletePost = (id) => {

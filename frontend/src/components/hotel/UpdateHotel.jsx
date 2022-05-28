@@ -7,19 +7,43 @@ import {
     Paper, TextField,
     Typography
 } from "@mui/material";
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate, useParams} from 'react-router-dom';
 import {useForm} from "react-hook-form";
 import AppAppBar from "../home/modules/views/AppAppBar";
 import {LocationCity} from "@mui/icons-material";
 import Footer from "../footer/Footer";
+import {useEffect, useState} from "react";
 
 const backgroundImage = 'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
 
-export default function AddHotel(){
+export default function UpdateHotel(){
+    const { id } = useParams();
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm({
+    const { register, setValue, handleSubmit } = useForm({
         mode: 'all'
     });
+    const [i, setI] = useState(0);
+
+    useEffect(() => {
+        fetch(`http://localhost:5000/hotels/${id}`)
+            .then(response => response.json())
+            .then(data => {
+                setValue("ownerName", data.ownerName)
+                setValue("name", data.name)
+                setValue("description", data.description)
+                setValue("address", data.address)
+                setValue("prePayment", data.prePayment)
+                setValue("category", data.category)
+                setValue("rating", data.rating)
+                setValue("mainImage", data.mainImage)
+                data.subImages.map((item, key) => {
+                    setValue("subImageURL" + key, item.image)
+                    setValue("subImageCap" + key, item.caption)
+                })
+                setI(0)
+            })
+            .catch(console.error)
+    })
 
     return(
         <div style={{backgroundColor: 'lightcyan', height:"160vh"}}>
@@ -37,10 +61,9 @@ export default function AddHotel(){
                     component="form"
                     onSubmit={handleSubmit((data) => {
                             const requestOptions = {
-                                method: 'POST',
+                                method: 'PUT',
                                 headers: {'Content-Type':'application/json'},
                                 body: JSON.stringify({
-                                    "user": sessionStorage.getItem("user"),
                                     "ownerName": data.ownerName,
                                     "name": data.name,
                                     "description": data.description,
@@ -50,6 +73,10 @@ export default function AddHotel(){
                                     "rating": data.rating,
                                     "mainImage": data.mainImage,
                                     "subImages": [
+                                        {
+                                            image: data.subImageURL0,
+                                            caption: data.subImageCap0
+                                        },
                                         {
                                             image: data.subImageURL1,
                                             caption: data.subImageCap1
@@ -81,18 +108,14 @@ export default function AddHotel(){
                                         {
                                             image: data.subImageURL8,
                                             caption: data.subImageCap8
-                                        },
-                                        {
-                                            image: data.subImageURL9,
-                                            caption: data.subImageCap9
                                         }
                                     ]
                                 })
                             };
-                            fetch('http://localhost:5000/hotels', requestOptions)
+                            fetch(`http://localhost:5000/hotels/${id}`, requestOptions)
                                 .then((response) => {
                                     console.log(response)
-                                    console.log("Registration successful")
+                                    console.log("Updated successful")
                                     navigate('/Hotels')
                                 })
                                 .catch(console.error)
@@ -105,20 +128,22 @@ export default function AddHotel(){
                         required
                         margin="normal"
                         fullWidth
+                        focused={true}
                         label="Owner Full Name"
-                        autoFocus
                         {...register('ownerName')}
                     />
                     <TextField
                         required
                         margin="normal"
                         fullWidth
+                        focused={true}
                         label="Hotel Name"
                         {...register('name')}
                     />
                     <TextField
                         required
                         margin="normal"
+                        focused={true}
                         multiline
                         rows={4}
                         label="Hotel Description"
@@ -128,6 +153,7 @@ export default function AddHotel(){
                     <TextField
                         required
                         margin="normal"
+                        focused={true}
                         fullWidth
                         label="Hotel Address"
                         {...register('address')}
@@ -137,6 +163,7 @@ export default function AddHotel(){
                             <TextField
                                 type={"number"}
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Hotel Reservation Prepayment Amount (Rs.)"
                                 {...register('prePayment')}
@@ -145,6 +172,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={4}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Hotel Category"
                                 {...register('category')}
@@ -154,6 +182,7 @@ export default function AddHotel(){
                             <TextField
                                 type={"number"}
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Hotel 5 Star Rating"
                                 InputProps={{ inputProps: { min: 0, max: 5 } }}
@@ -164,6 +193,7 @@ export default function AddHotel(){
                     <TextField
                         required
                         margin="normal"
+                        focused={true}
                         fullWidth
                         label="Hotel Main Image URL"
                         {...register('mainImage')}
@@ -177,6 +207,25 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
+                                fullWidth
+                                label="Image URL"
+                                {...register('subImageURL0')}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={6}>
+                            <TextField
+                                margin="normal"
+                                focused={true}
+                                fullWidth
+                                label="Caption"
+                                {...register('subImageCap0')}
+                            />
+                        </Grid>
+                        <Grid item xs={12} md={6} lg={6}>
+                            <TextField
+                                margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Image URL"
                                 {...register('subImageURL1')}
@@ -185,6 +234,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Caption"
                                 {...register('subImageCap1')}
@@ -193,6 +243,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Image URL"
                                 {...register('subImageURL2')}
@@ -201,6 +252,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Caption"
                                 {...register('subImageCap2')}
@@ -209,6 +261,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Image URL"
                                 {...register('subImageURL3')}
@@ -217,6 +270,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Caption"
                                 {...register('subImageCap3')}
@@ -225,6 +279,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Image URL"
                                 {...register('subImageURL4')}
@@ -233,6 +288,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Caption"
                                 {...register('subImageCap4')}
@@ -241,6 +297,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Image URL"
                                 {...register('subImageURL5')}
@@ -249,6 +306,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Caption"
                                 {...register('subImageCap5')}
@@ -257,6 +315,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Image URL"
                                 {...register('subImageURL6')}
@@ -265,6 +324,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Caption"
                                 {...register('subImageCap6')}
@@ -273,6 +333,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Image URL"
                                 {...register('subImageURL7')}
@@ -281,6 +342,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Caption"
                                 {...register('subImageCap7')}
@@ -289,6 +351,7 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Image URL"
                                 {...register('subImageURL8')}
@@ -297,25 +360,10 @@ export default function AddHotel(){
                         <Grid item xs={12} md={6} lg={6}>
                             <TextField
                                 margin="normal"
+                                focused={true}
                                 fullWidth
                                 label="Caption"
                                 {...register('subImageCap8')}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={6}>
-                            <TextField
-                                margin="normal"
-                                fullWidth
-                                label="Image URL"
-                                {...register('subImageURL9')}
-                            />
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={6}>
-                            <TextField
-                                margin="normal"
-                                fullWidth
-                                label="Caption"
-                                {...register('subImageCap9')}
                             />
                         </Grid>
                     </Grid>

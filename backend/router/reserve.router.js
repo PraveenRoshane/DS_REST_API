@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import {getAll, save, getById, update, deletePost} from '../api/reserve.api.js'
+import {getAll, save, getById, update, getByUser, deleteReserve} from '../api/reserve.api.js'
 
 
 const reserveRouter = new Router({
@@ -32,6 +32,13 @@ reserveRouter.get('/:id', async (ctx) => {
     ctx.status = 200;
 })
 
+reserveRouter.get('/user/:id', async (ctx) => {
+    const id = ctx.params.id;
+    ctx.body = await getByUser(id);
+    ctx.set('Content-Type', 'application.json');
+    ctx.status = 200;
+})
+
 reserveRouter.put('/:id', async (ctx) => {
     const id = ctx.params.id;
     ctx.body = await update(id, ctx.request.body);
@@ -39,9 +46,9 @@ reserveRouter.put('/:id', async (ctx) => {
     ctx.status = 200;
 })
 
-reserveRouter.delete('/:id', async (ctx) => {
+reserveRouter.delete('/delete/:id', async (ctx) => {
     const id = ctx.params.id;
-    await deletePost(id);
+    await deleteReserve(id);
     ctx.status = 204;
 })
 

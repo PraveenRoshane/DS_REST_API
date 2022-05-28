@@ -8,6 +8,9 @@ import SignIn from "./components/User/SignIn";
 import SignUp from "./components/User/SignUp";
 import ReserveTaxi from './components/TaxiService/ReserveTaxi';
 import ManageTaxi from './components/TaxiService/ManageTaxi';
+import UpdateHotel from "./components/hotel/UpdateHotel";
+import MyHotels from "./components/hotel/MyHotels";
+import MyReservations from "./components/reservation/MyReservations";
 
 function App() {
   return (
@@ -18,16 +21,15 @@ function App() {
           <Route path='/Signin' element={<SignIn />} />
           <Route path='/Signup' element={<SignUp />} />
           <Route path='/Hotels' element={<HotelsHome />} />
+          <Route path='/MyHotels' element={<MyHotels />} />
+          <Route path='/MyReservations' element={<MyReservations />} />
           <Route path='/HotelsAdd' element={<AddHotel />} />
           <Route path='/Hotels/:id' element={<Hotel />} />
-          <Route path='/Payment' element={<HotelsHome />} />
+          <Route path='/Hotels/update/:id' element={<UpdateHotel />} />
+          <Route path='/Payment/:amount' element={<HotelsHome />} />
           <Route path='/taxiService' element={<ReserveTaxi />} />
           <Route path='/manageTaxi' element={<ManageTaxi />} />
-          
 
-          {/*<Route path='/ViewItems' element={<ViewItems />} />*/}
-          {/*<Route path='/ManagePromotions' element={<ManagePromotions />} />*/}
-          {/*<Route path='/AddItems' element={<AddItems />} />*/}
         </Routes>
       </BrowserRouter>
     </div>

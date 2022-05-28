@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import {getAll, save, getById, update, deletePost} from '../api/hotels.api.js'
+import {getAll, save, getById, update, deletePost, getByUser} from '../api/hotels.api.js'
 
 
 const hotelsRouter = new Router({
@@ -23,6 +23,13 @@ hotelsRouter.get('/', async (ctx) => {
 hotelsRouter.get('/:id', async (ctx) => {
     const id = ctx.params.id;
     ctx.body = await getById(id);
+    ctx.set('Content-Type', 'application.json');
+    ctx.status = 200;
+})
+
+hotelsRouter.get('/user/:id', async (ctx) => {
+    const id = ctx.params.id;
+    ctx.body = await getByUser(id);
     ctx.set('Content-Type', 'application.json');
     ctx.status = 200;
 })

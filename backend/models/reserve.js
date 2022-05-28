@@ -3,6 +3,8 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
     UserId: String,
+    hotelId: String,
+    hotelName: String,
     CheckIn: String,
     CheckOut: String,
     Adults: String,

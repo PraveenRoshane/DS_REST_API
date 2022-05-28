@@ -16,6 +16,7 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {Alert} from "@mui/material";
 import {useState} from "react";
+import AppAppBar from "../home/modules/views/AppAppBar";
 
 function Copyright(props) {
     return (
@@ -42,6 +43,7 @@ export default function SignUp() {
 
     return (
         <ThemeProvider theme={theme}>
+            <AppAppBar/>
             <Container component="main" maxWidth="xs">
                 <CssBaseline />
                 <Box

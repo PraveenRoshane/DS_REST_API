@@ -16,6 +16,8 @@ import {useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import {useState} from "react";
 import {Alert} from "@mui/material";
+import AppAppBar from "../home/modules/views/AppAppBar";
+import {LockOpenOutlined} from "@mui/icons-material";
 
 function Copyright(props) {
     return (
@@ -42,6 +44,7 @@ export default function SignIn() {
 
     return (
         <ThemeProvider theme={theme}>
+            <AppAppBar/>
             <Grid container component="main" sx={{ height: '100vh' }}>
                 <CssBaseline />
                 <Grid
@@ -69,7 +72,7 @@ export default function SignIn() {
                         }}
                     >
                         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                            <LockOutlinedIcon />
+                            <LockOpenOutlined />
                         </Avatar>
                         <Typography component="h1" variant="h5">
                             Sign in

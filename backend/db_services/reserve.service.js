@@ -4,6 +4,10 @@ export const getReserveFromDb = async (id) => {
     const data = await Reserve.findOne({id: id})
     return data;
 };
+export const getUserReserveFromDb = async (id) => {
+    const data = await Reserve.find({UserId: id})
+    return data;
+};
 export const createReserveInDb = async (hotel) => {
     var newHotel = new Reserve(hotel);
     newHotel.save();
@@ -18,6 +22,6 @@ export const updateReserveFromDb = async (id, ctx) => {
     return data;
 };
 export const deleteReserveFromDb = async (id) => {
-    const data = await Reserve.delete({id: id})
+    const data = await Reserve.deleteOne({_id: id});
     return data;
 };
