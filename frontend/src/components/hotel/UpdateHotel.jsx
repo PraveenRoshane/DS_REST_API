@@ -13,6 +13,8 @@ import AppAppBar from "../home/modules/views/AppAppBar";
 import {LocationCity} from "@mui/icons-material";
 import Footer from "../footer/Footer";
 import {useEffect, useState} from "react";
+import hotel from "../axios/HotelAPI";
+import api from "../axios/HotelAPI";
 
 const backgroundImage = 'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
 
@@ -22,11 +24,9 @@ export default function UpdateHotel(){
     const { register, setValue, handleSubmit } = useForm({
         mode: 'all'
     });
-    const [i, setI] = useState(0);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/hotels/${id}`)
-            .then(response => response.json())
+        api.hotel.getHotelById(id)
             .then(data => {
                 setValue("ownerName", data.ownerName)
                 setValue("name", data.name)
@@ -40,10 +40,9 @@ export default function UpdateHotel(){
                     setValue("subImageURL" + key, item.image)
                     setValue("subImageCap" + key, item.caption)
                 })
-                setI(0)
             })
             .catch(console.error)
-    })
+    }, [])
 
     return(
         <div style={{backgroundColor: 'lightcyan', height:"160vh"}}>
@@ -60,65 +59,61 @@ export default function UpdateHotel(){
                 <Box
                     component="form"
                     onSubmit={handleSubmit((data) => {
-                            const requestOptions = {
-                                method: 'PUT',
-                                headers: {'Content-Type':'application/json'},
-                                body: JSON.stringify({
-                                    "ownerName": data.ownerName,
-                                    "name": data.name,
-                                    "description": data.description,
-                                    "address": data.address,
-                                    "prePayment": data.prePayment,
-                                    "category": data.category,
-                                    "rating": data.rating,
-                                    "mainImage": data.mainImage,
-                                    "subImages": [
-                                        {
-                                            image: data.subImageURL0,
-                                            caption: data.subImageCap0
-                                        },
-                                        {
-                                            image: data.subImageURL1,
-                                            caption: data.subImageCap1
-                                        },
-                                        {
-                                            image: data.subImageURL2,
-                                            caption: data.subImageCap2
-                                        },
-                                        {
-                                            image: data.subImageURL3,
-                                            caption: data.subImageCap3
-                                        },
-                                        {
-                                            image: data.subImageURL4,
-                                            caption: data.subImageCap4
-                                        },
-                                        {
-                                            image: data.subImageURL5,
-                                            caption: data.subImageCap5
-                                        },
-                                        {
-                                            image: data.subImageURL6,
-                                            caption: data.subImageCap6
-                                        },
-                                        {
-                                            image: data.subImageURL7,
-                                            caption: data.subImageCap7
-                                        },
-                                        {
-                                            image: data.subImageURL8,
-                                            caption: data.subImageCap8
-                                        }
-                                    ]
-                                })
-                            };
-                            fetch(`http://localhost:5000/hotels/${id}`, requestOptions)
-                                .then((response) => {
-                                    console.log(response)
-                                    console.log("Updated successful")
-                                    navigate('/Hotels')
-                                })
-                                .catch(console.error)
+                        const requestbody = {
+                            ownerName: data.ownerName,
+                            name: data.name,
+                            description: data.description,
+                            address: data.address,
+                            prePayment: data.prePayment,
+                            category: data.category,
+                            rating: data.rating,
+                            mainImage: data.mainImage,
+                            subImages: [
+                                {
+                                    image: data.subImageURL1,
+                                    caption: data.subImageCap1
+                                },
+                                {
+                                    image: data.subImageURL2,
+                                    caption: data.subImageCap2
+                                },
+                                {
+                                    image: data.subImageURL3,
+                                    caption: data.subImageCap3
+                                },
+                                {
+                                    image: data.subImageURL4,
+                                    caption: data.subImageCap4
+                                },
+                                {
+                                    image: data.subImageURL5,
+                                    caption: data.subImageCap5
+                                },
+                                {
+                                    image: data.subImageURL6,
+                                    caption: data.subImageCap6
+                                },
+                                {
+                                    image: data.subImageURL7,
+                                    caption: data.subImageCap7
+                                },
+                                {
+                                    image: data.subImageURL8,
+                                    caption: data.subImageCap8
+                                },
+                                {
+                                    image: data.subImageURL9,
+                                    caption: data.subImageCap9
+                                }
+                            ]
+                        }
+                        api.hotel.updateHotel(id, requestbody)
+                            .then((response) => {
+                                console.log(response)
+                                console.log("Updated successful")
+                                navigate('/Hotels')
+                            })
+                            .catch(console.error)
                         }
                     )}
                     noValidate

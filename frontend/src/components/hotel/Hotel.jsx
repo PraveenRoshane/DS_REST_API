@@ -21,6 +21,8 @@ import Button from "@mui/material/Button";
 import Footer from "../footer/Footer";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import hotel from "../axios/HotelAPI";
+import api from "../axios/HotelAPI";
 
 export default function Hotel(){
     const { id } = useParams();
@@ -28,10 +30,9 @@ export default function Hotel(){
     const [items, setItems] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/hotels/${id}`)
-            .then(response => response.json())
+        api.hotel.getHotelById(id)
             .then(data => setItems(data))
-            .catch(console.error)
+            .catch(error => console.error(error))
     }, [id]);
 
     const data = [
@@ -150,38 +151,34 @@ export default function Hotel(){
                         <Box
                             component="form"
                             onSubmit={handleSubmit((data) => {
-                                    const requestOptions = {
-                                        method: 'POST',
-                                        headers: {'Content-Type':'application/json'},
-                                        body: JSON.stringify({
-                                            "UserId": sessionStorage.getItem("user"),
-                                            "hotelId": id,
-                                            "hotelName": items.name,
-                                            "CheckIn": data.CheckIn,
-                                            "CheckOut": data.CheckOut,
-                                            "Adults": data.Adults,
-                                            "Children": data.Children,
-                                            "RoomType": data.RoomType,
-                                            "Rooms": data.Rooms,
-                                            "Email": data.email,
-                                            "Phone": data.phone
-                                        })
-                                    };
-                                    fetch('http://localhost:5000/reserve', requestOptions)
-                                        .then(() => {
-                                            console.log("Reservation successful")
-                                            if(data.checked){
-                                                navigate('/taxiService')
+                                const requestBody = {
+                                    UserId: sessionStorage.getItem("user"),
+                                    hotelId: id,
+                                    hotelName: items.name,
+                                    CheckIn: data.CheckIn,
+                                    CheckOut: data.CheckOut,
+                                    Adults: data.Adults,
+                                    Children: data.Children,
+                                    RoomType: data.RoomType,
+                                    Rooms: data.Rooms,
+                                    Email: data.email,
+                                    Phone: data.phone
+                                }
+                                api.reservation.addReservation(requestBody)
+                                    .then(() => {
+                                        console.log("Reservation successful")
+                                        if(data.checked){
+                                            navigate('/taxiService')
+                                        }else {
+                                            if(items.prePayment == null){
+                                                navigate('/Hotels')
                                             }else {
-                                                if(items.prePayment == null){
-                                                    navigate('/Hotels')
-                                                }else {
-                                                    navigate(`/Payment/${items.prePayment}`)
-                                                }
+                                                navigate(`/Payment/${items.prePayment}`)
                                             }
+                                        }
 
-                                        })
-                                        .catch(console.error)
+                                    })
+                                    .catch(console.error)
                                 }
                             )}
                             noValidate

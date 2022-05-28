@@ -7,6 +7,8 @@ import {styled} from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import AppAppBar from "../home/modules/views/AppAppBar";
 import Footer from "../footer/Footer";
+import hotel from "../axios/HotelAPI";
+import api from "../axios/HotelAPI";
 
 const backgroundImage = 'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
 
@@ -59,10 +61,7 @@ export default function HotelsHome(){
     const [hotels, setHotels] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/hotels')
-            .then(response => response.json())
-            .then(data => setHotels(data))
-            .catch(console.error)
+        api.hotel.getHotels().then(data => setHotels(data))
     }, []);
 
     const searchProduct = (value) => {

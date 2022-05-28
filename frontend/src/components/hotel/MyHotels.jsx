@@ -15,16 +15,18 @@ import {useEffect, useState} from "react";
 import AppAppBar from "../home/modules/views/AppAppBar";
 import Footer from "../footer/Footer";
 import {useNavigate} from "react-router-dom";
+import hotel from "../axios/HotelAPI";
+import data from "bootstrap/js/src/dom/data";
+import api from "../axios/HotelAPI";
 
 export default function MyHotels(){
     const navigate = useNavigate();
     const [hotels, setHotels] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/hotels/user/${sessionStorage.getItem("user")}`)
-            .then(response => response.json())
+        api.hotel.getMyHotels(sessionStorage.getItem("user"))
             .then(data => setHotels(data))
-            .catch(console.error)
+            .catch(error => console.error(error))
     }, []);
 
     return(

@@ -17,6 +17,7 @@ import {useForm} from "react-hook-form";
 import {Alert} from "@mui/material";
 import {useState} from "react";
 import AppAppBar from "../home/modules/views/AppAppBar";
+import api from "../axios/HotelAPI";
 
 function Copyright(props) {
     return (
@@ -63,24 +64,17 @@ export default function SignUp() {
                     <Box component="form"
                          noValidate
                          onSubmit={handleSubmit((data) => {
-                             fetch(`http://localhost:5000/user/${data.email}`)
-                                 .then(response => response.json())
+                             api.user.getUserById(data.email)
                                  .then(value => {
-                                     console.log(value)
                                      if(value.email == null){
                                          setAlert(false)
-                                         const requestOptions = {
-                                             method: 'POST',
-                                             headers: {'Content-Type':'application/json'},
-                                             body: JSON.stringify({
-                                                 "firstName": data.firstName,
-                                                 "secondName": data.secondName,
-                                                 "email": data.email,
-                                                 "password": data.password
-                                             })
-                                         };
-                                         fetch('http://localhost:5000/user', requestOptions)
-                                             .then(response => response.json())
+                                         const requestBody = {
+                                             firstName: data.firstName,
+                                             secondName: data.secondName,
+                                             email: data.email,
+                                             password: data.password
+                                         }
+                                         api.user.addUser(requestBody)
                                              .then(data => {
                                                  sessionStorage.setItem("user", data.email);
                                                  navigate('/Hotels')

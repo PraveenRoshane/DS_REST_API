@@ -18,6 +18,7 @@ import {useState} from "react";
 import {Alert} from "@mui/material";
 import AppAppBar from "../home/modules/views/AppAppBar";
 import {LockOpenOutlined} from "@mui/icons-material";
+import api from "../axios/HotelAPI";
 
 function Copyright(props) {
     return (
@@ -81,28 +82,21 @@ export default function SignIn() {
                             component="form"
                             noValidate
                             onSubmit={handleSubmit((data) => {
-                                    const requestOptions = {
-                                        method: 'POST',
-                                        headers: {'Content-Type':'application/json'},
-                                        body: JSON.stringify({
-                                            "email": data.email,
-                                            "password": data.password
-                                        })
-                                    };
-                                    fetch('http://localhost:5000/user/verify', requestOptions)
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if(data.email == null){
-                                                setAlert(true)
-                                                console.log("fail")
-                                            }else {
-                                                setAlert(false)
-                                                console.log(data.email)
-                                                sessionStorage.setItem("user", data.email);
-                                                navigate('/Hotels')
-                                            }
-                                        })
-                                        .catch(console.error)
+                                const requestBody = {
+                                    email: data.email,
+                                    password: data.password
+                                }
+                                api.user.userVerify(requestBody)
+                                    .then(data => {
+                                        if(data.email == null){
+                                            setAlert(true)
+                                        }else {
+                                            setAlert(false)
+                                            sessionStorage.setItem("user", data.email);
+                                            navigate('/Hotels')
+                                        }
+                                    })
+                                    .catch(console.error)
                                 }
                             )}
                             sx={{ mt: 1 }}

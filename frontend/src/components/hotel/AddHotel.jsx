@@ -7,27 +7,29 @@ import {
     Paper, TextField,
     Typography
 } from "@mui/material";
-import { Link, useNavigate } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import {useForm} from "react-hook-form";
 import AppAppBar from "../home/modules/views/AppAppBar";
 import {LocationCity} from "@mui/icons-material";
 import Footer from "../footer/Footer";
+import hotel from "../axios/HotelAPI";
+import api from "../axios/HotelAPI";
 
 const backgroundImage = 'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
 
-export default function AddHotel(){
+export default function AddHotel() {
     const navigate = useNavigate();
-    const { register, handleSubmit } = useForm({
+    const {register, handleSubmit} = useForm({
         mode: 'all'
     });
 
-    return(
-        <div style={{backgroundColor: 'lightcyan', height:"160vh"}}>
+    return (
+        <div style={{backgroundColor: 'lightcyan', height: "160vh"}}>
             <AppAppBar/>
             <br/>
-            <Container component={Paper} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4 }}>
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main', height: 100, width: 100}}>
-                    <LocationCity sx={{height: 70, width: 70}} />
+            <Container component={Paper} sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', p: 4}}>
+                <Avatar sx={{m: 1, bgcolor: 'secondary.main', height: 100, width: 100}}>
+                    <LocationCity sx={{height: 70, width: 70}}/>
                 </Avatar>
                 <br/>
                 <Typography component="h1" variant="h5">
@@ -36,60 +38,56 @@ export default function AddHotel(){
                 <Box
                     component="form"
                     onSubmit={handleSubmit((data) => {
-                            const requestOptions = {
-                                method: 'POST',
-                                headers: {'Content-Type':'application/json'},
-                                body: JSON.stringify({
-                                    "user": sessionStorage.getItem("user"),
-                                    "ownerName": data.ownerName,
-                                    "name": data.name,
-                                    "description": data.description,
-                                    "address": data.address,
-                                    "prePayment": data.prePayment,
-                                    "category": data.category,
-                                    "rating": data.rating,
-                                    "mainImage": data.mainImage,
-                                    "subImages": [
-                                        {
-                                            image: data.subImageURL1,
-                                            caption: data.subImageCap1
-                                        },
-                                        {
-                                            image: data.subImageURL2,
-                                            caption: data.subImageCap2
-                                        },
-                                        {
-                                            image: data.subImageURL3,
-                                            caption: data.subImageCap3
-                                        },
-                                        {
-                                            image: data.subImageURL4,
-                                            caption: data.subImageCap4
-                                        },
-                                        {
-                                            image: data.subImageURL5,
-                                            caption: data.subImageCap5
-                                        },
-                                        {
-                                            image: data.subImageURL6,
-                                            caption: data.subImageCap6
-                                        },
-                                        {
-                                            image: data.subImageURL7,
-                                            caption: data.subImageCap7
-                                        },
-                                        {
-                                            image: data.subImageURL8,
-                                            caption: data.subImageCap8
-                                        },
-                                        {
-                                            image: data.subImageURL9,
-                                            caption: data.subImageCap9
-                                        }
-                                    ]
-                                })
-                            };
-                            fetch('http://localhost:5000/hotels', requestOptions)
+                            const requestbody = {
+                                user: sessionStorage.getItem("user"),
+                                ownerName: data.ownerName,
+                                name: data.name,
+                                description: data.description,
+                                address: data.address,
+                                prePayment: data.prePayment,
+                                category: data.category,
+                                rating: data.rating,
+                                mainImage: data.mainImage,
+                                subImages: [
+                                    {
+                                        image: data.subImageURL1,
+                                        caption: data.subImageCap1
+                                    },
+                                    {
+                                        image: data.subImageURL2,
+                                        caption: data.subImageCap2
+                                    },
+                                    {
+                                        image: data.subImageURL3,
+                                        caption: data.subImageCap3
+                                    },
+                                    {
+                                        image: data.subImageURL4,
+                                        caption: data.subImageCap4
+                                    },
+                                    {
+                                        image: data.subImageURL5,
+                                        caption: data.subImageCap5
+                                    },
+                                    {
+                                        image: data.subImageURL6,
+                                        caption: data.subImageCap6
+                                    },
+                                    {
+                                        image: data.subImageURL7,
+                                        caption: data.subImageCap7
+                                    },
+                                    {
+                                        image: data.subImageURL8,
+                                        caption: data.subImageCap8
+                                    },
+                                    {
+                                        image: data.subImageURL9,
+                                        caption: data.subImageCap9
+                                    }
+                                ]
+                            }
+                            api.hotel.addHotel(requestbody)
                                 .then((response) => {
                                     console.log(response)
                                     console.log("Registration successful")
@@ -99,7 +97,7 @@ export default function AddHotel(){
                         }
                     )}
                     noValidate
-                    sx={{ mt: 1 }}
+                    sx={{mt: 1}}
                 >
                     <TextField
                         required
@@ -156,7 +154,7 @@ export default function AddHotel(){
                                 margin="normal"
                                 fullWidth
                                 label="Hotel 5 Star Rating"
-                                InputProps={{ inputProps: { min: 0, max: 5 } }}
+                                InputProps={{inputProps: {min: 0, max: 5}}}
                                 {...register('rating')}
                             />
                         </Grid>
@@ -323,7 +321,7 @@ export default function AddHotel(){
                         type="submit"
                         fullWidth
                         variant="contained"
-                        sx={{ mt: 3, mb: 2 }}
+                        sx={{mt: 3, mb: 2}}
                     >
                         Register
                     </Button>

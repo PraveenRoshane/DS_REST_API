@@ -16,16 +16,17 @@ import AppAppBar from "../home/modules/views/AppAppBar";
 import Footer from "../footer/Footer";
 import {useNavigate} from "react-router-dom";
 import {red} from "@mui/material/colors";
+import api from "../axios/HotelAPI";
+import data from "bootstrap/js/src/dom/data";
 
 export default function MyReservations(){
     const navigate = useNavigate();
     const [reservations, setReservations] = useState([]);
 
     useEffect(() => {
-        fetch(`http://localhost:5000/reserve/user/${sessionStorage.getItem("user")}`)
-            .then(response => response.json())
+        api.reservation.getMyReservations(sessionStorage.getItem("user"))
             .then(data => setReservations(data))
-            .catch(console.error)
+            .catch(error => console.error(error))
     }, []);
 
     return(
@@ -66,8 +67,8 @@ export default function MyReservations(){
                                     <TableCell align="right" width={20}>
                                         <Button
                                             onClick={() => {
-                                                fetch(`http://localhost:5000/reserve/delete/${row._id}`, { method: 'DELETE' })
-                                                    .then((response) => {
+                                                api.reservation.deleteReservation(row._id)
+                                                    .then(() => {
                                                         window.location.reload()
                                                     })
                                                     .catch(console.error)
