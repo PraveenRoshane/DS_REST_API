@@ -23,6 +23,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import hotel from "../axios/HotelAPI";
 import api from "../axios/HotelAPI";
+import axios from "axios";
 
 export default function Hotel(){
     const { id } = useParams();
@@ -86,7 +87,9 @@ export default function Hotel(){
 
     const { register, handleSubmit } = useForm({
         mode: 'all'
-    });
+    }
+        
+    );
 
     return(
         <div style={{backgroundColor: 'lightcyan', height:"100vh"}}>

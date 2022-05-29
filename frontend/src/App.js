@@ -11,6 +11,7 @@ import ManageTaxi from './components/TaxiService/ManageTaxi';
 import UpdateHotel from "./components/hotel/UpdateHotel";
 import MyHotels from "./components/hotel/MyHotels";
 import MyReservations from "./components/reservation/MyReservations";
+import Payment from './components/Payment/Payment';
 
 function App() {
   return (
@@ -26,9 +27,10 @@ function App() {
           <Route path='/HotelsAdd' element={<AddHotel />} />
           <Route path='/Hotels/:id' element={<Hotel />} />
           <Route path='/Hotels/update/:id' element={<UpdateHotel />} />
-          <Route path='/Payment/:amount' element={<HotelsHome />} />
+          <Route path='/Payment/:amount' element={<Payment />} />
           <Route path='/taxiService' element={<ReserveTaxi />} />
           <Route path='/manageTaxi' element={<ManageTaxi />} />
+          <Route path='/payment' element={<Payment />} />
 
         </Routes>
       </BrowserRouter>

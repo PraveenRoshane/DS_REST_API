@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/hotels" name="manageHotels" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="GET" uri-template="/hotels">
+        <inSequence>
+            <log>
+                <property name="message" value="Welcome to hotel service"/>
+            </log>
+            <send>
+                <endpoint key="allHotels"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/{id}">
+        <inSequence>
+            <log>
+                <property name="message" value="Getting Hotels By Id"/>
+            </log>
+            <send>
+                <endpoint key="getHotelById"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="hotels/user/{id}">
+        <inSequence>
+            <log>
+                <property name="message" value="Getting Hotels By User"/>
+            </log>
+            <send>
+                <endpoint key="getUserHotels"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/hotels">
+        <inSequence>
+            <log>
+                <property name="message" value="Add New Hotel"/>
+            </log>
+            <send>
+                <endpoint key="addHotel"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="PUT" url-mapping="/hotels/{id}">
+        <inSequence>
+            <log>
+                <property name="message" value="Update Hotel"/>
+            </log>
+            <send>
+                <endpoint key="updateHotel"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/reserve">
+        <inSequence>
+            <log>
+                <property name="message" value="Add Reservation"/>
+            </log>
+            <send>
+                <endpoint key="addReservation"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/reserve/user/{id}">
+        <inSequence>
+            <log>
+                <property name="message" value="Geting user reservations"/>
+            </log>
+            <send>
+                <endpoint key="getUserReservation"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="DELETE" url-mapping="/reserve/delete/{id}">
+        <inSequence>
+            <log>
+                <property name="message" value="Deleting Reservation"/>
+            </log>
+            <send>
+                <endpoint key="deleteReservation"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/user">
+        <inSequence>
+            <log>
+                <property name="message" value="Add user"/>
+            </log>
+            <send>
+                <endpoint key="addUser"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="POST" url-mapping="/user/verify">
+        <inSequence>
+            <log>
+                <property name="message" value="Verifying User"/>
+            </log>
+            <send>
+                <endpoint key="userVerify"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+    <resource methods="GET" uri-template="/user/{id}">
+        <inSequence>
+            <log>
+                <property name="message" value="Getting user by Id"/>
+            </log>
+            <send>
+                <endpoint key="getUserById"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+</api>

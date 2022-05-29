@@ -6,8 +6,6 @@ import {
   deleteReserveFromDb, getUserReserveFromDb,
 } from "../db_services/reserve.service.js";
 
-import nodemailer from 'nodemailer';
-
 export const save = async ({
   UserId, hotelId, hotelName,
   CheckIn,
@@ -33,39 +31,6 @@ export const save = async ({
     Email,
     Phone,
   };
-
-  const email = ctx.Email;
-
-  let transport = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: "testemails9907@gmail.com",
-      pass: "Testemail@9907",
-    },
-  });
-
-  const message = {
-    from: "testemails9907@gmail.com", // Sender address
-    to: email, // List of recipients
-    subject: "Confirmation Email", // Subject line
-    text: "You Have Successfully reserved" + "\n\n"
-    + "Check-in Date = " + ctx.CheckIn + "\n"
-    + "Check-out Date = " + ctx.CheckOut + "\n"
-    + "Adults = " + ctx.Adults + "\n"
-    + "Children = " + ctx.Children + "\n"
-    + "Room-Type = " + ctx.RoomType + "\n"
-    + "Rooms = " + ctx.Rooms
-  };
-
-  console.log(message)
-
-  transport.sendMail(message, function (err, info) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log(info);
-    }
-  });
 
   const reserve = await createReserveInDb(ctx);
   return reserve;

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/taxi" name="TaxiService" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" url-mapping="/book">
+        <inSequence>
+            <log>
+                <property name="message" value="taxi service started!"/>
+            </log>
+            <send>
+                <endpoint key="book"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+</api>

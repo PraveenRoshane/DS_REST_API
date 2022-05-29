@@ -40,18 +40,17 @@ const ReserveTaxi = () => {
       });
   };
 
+
+  //RESERVE TAXI=============================================================================================================================
   const handleReserve = () => {
+      const data = {
+        username: name,
+        email: email,
+        date: Date.now().toString()
+      }
 
-    const formData = new FormData();
-
-      formData.append("from_latitudeitude", latitude);
-      formData.append('from_longitude', longitude);
-      formData.append("to_latitude", '6.927079');
-      formData.append("to_longitude", '79.861244');
-      formData.append("email", email);
-
-    axios.post(`http://localhost:3002/customer/create-booking`, formData).then(() => {
-      window.location.href = "/manageTaxi";
+    axios.post(`http://localhost:8280/taxi/book`, data).then(() => {
+      alert("Taxi has been booked for your location")
     }).catch((e) => {
       console.log(e.message);
       setError(true);

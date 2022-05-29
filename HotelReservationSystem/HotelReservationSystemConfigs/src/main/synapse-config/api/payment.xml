@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/payment" name="payment" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" url-mapping="/process">
+        <inSequence>
+            <log>
+                <property name="message" value="payment process started!"/>
+            </log>
+            <send>
+                <endpoint key="pay"/>
+            </send>
+        </inSequence>
+        <outSequence>
+            <send/>
+        </outSequence>
+        <faultSequence/>
+    </resource>
+</api>
